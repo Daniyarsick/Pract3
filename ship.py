@@ -13,7 +13,7 @@ class Ship(Sprite):
         self.screen_rect = game.screen.get_rect()  # Прямоугольник экрана
 
         # Загружаем изображение корабля и получаем его прямоугольник.
-        self.image = pygame.image.load('assets/ship.bmp')
+        self.image = pygame.image.load('images/ship.bmp')
         self.rect = self.image.get_rect()
 
         # Устанавливаем корабль в нижней центральной части экрана.

@@ -1,3 +1,16 @@
+import os
+import sys
+import pygame
+
+def resource_path(relative_path):
+    try:
+        # PyInstaller создает временную папку и сохраняет путь к ней в _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 class Settings:
     """Класс для хранения всех настроек игры Alien Invasion."""
 
@@ -26,6 +39,13 @@ class Settings:
 
         # Инициализация динамических настроек
         self.initialize_dynamic_settings()
+
+        # Инициализация звуков
+        pygame.mixer.init()
+        self.bullet_sound = pygame.mixer.Sound(resource_path('sounds/laser.wav'))
+        self.alien_hit_sound = pygame.mixer.Sound(resource_path('sounds/explosion.wav'))
+        self.ship_hit_sound = pygame.mixer.Sound(resource_path('sounds/ship_hit.wav'))
+        self.game_over_sound = pygame.mixer.Sound(resource_path('sounds/game_over.wav'))
 
     def initialize_dynamic_settings(self):
         """Инициализирует настройки, которые меняются в процессе игры."""

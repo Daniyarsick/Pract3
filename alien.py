@@ -1,6 +1,17 @@
+import os
+import sys
+
 import pygame
 from pygame.sprite import Sprite
 
+def resource_path(relative_path):
+    try:
+        # PyInstaller создает временную папку и сохраняет путь к ней в _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 class Alien(Sprite):
     """Класс, представляющий пришельца в игре."""
@@ -11,8 +22,8 @@ class Alien(Sprite):
         self.screen = game.screen  # Экран игры
         self.settings = game.settings  # Настройки игры
 
-        # Загружаем изображение пришельца и устанавливаем его атрибут rect.
-        self.image = pygame.image.load('assets/alien.bmp')
+        # Загрузка изображения
+        self.image = pygame.image.load(resource_path("images/alien.bmp"))
         self.rect = self.image.get_rect()
 
         # Устанавливаем начальную позицию пришельца в верхнем левом углу экрана.
