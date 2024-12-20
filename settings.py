@@ -2,14 +2,8 @@ import os
 import sys
 import pygame
 
-def resource_path(relative_path):
-    try:
-        # PyInstaller создает временную папку и сохраняет путь к ней в _MEIPASS
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
+from utils import resource_path
 
-    return os.path.join(base_path, relative_path)
 
 class Settings:
     """Класс для хранения всех настроек игры Alien Invasion."""

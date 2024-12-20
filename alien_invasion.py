@@ -9,7 +9,7 @@ from button import Button
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
-from utils import hide_mouse_cursor
+from utils import hide_mouse_cursor, resource_path
 import  settings
 
 class AlienInvasion:
@@ -24,10 +24,10 @@ class AlienInvasion:
 
         # Инициализация звуков
         pygame.mixer.init()
-        self.bullet_sound = pygame.mixer.Sound(settings.resource_path('sounds/laser.wav'))
-        self.alien_hit_sound = pygame.mixer.Sound(settings.resource_path('sounds/explosion.wav'))
-        self.ship_hit_sound = pygame.mixer.Sound(settings.resource_path('sounds/ship_hit.wav'))
-        self.game_over_sound = pygame.mixer.Sound(settings.resource_path('sounds/game_over.wav'))
+        self.bullet_sound = pygame.mixer.Sound(resource_path('sounds/laser.wav'))
+        self.alien_hit_sound = pygame.mixer.Sound(resource_path('sounds/explosion.wav'))
+        self.ship_hit_sound = pygame.mixer.Sound(resource_path('sounds/ship_hit.wav'))
+        self.game_over_sound = pygame.mixer.Sound(resource_path('sounds/game_over.wav'))
 
         # Создаем окно игры
         self.screen = pygame.display.set_mode((1200, 800))

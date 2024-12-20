@@ -4,14 +4,8 @@ import sys
 import pygame
 from pygame.sprite import Sprite
 
-def resource_path(relative_path):
-    try:
-        # PyInstaller создает временную папку и сохраняет путь к ней в _MEIPASS
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
+from utils import resource_path
 
-    return os.path.join(base_path, relative_path)
 
 class Alien(Sprite):
     """Класс, представляющий пришельца в игре."""
