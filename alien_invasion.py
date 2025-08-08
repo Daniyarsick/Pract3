@@ -1,3 +1,21 @@
+"""
+Alien Invasion - классическая 2D аркадная игра
+
+О чем эта игра:
+Игрок управляет космическим кораблем, защищая Землю от волн атакующих инопланетян.
+Реализация популярной аркадной игры в стиле "Space Invaders" с использованием Pygame.
+
+Основная механика:
+- Управление кораблем стрелками влево/вправо
+- Стрельба по инопланетянам клавишей пробел
+- Набор очков за уничтожение врагов
+- Прохождение уровней с возрастающей сложностью
+- Ограниченное количество жизней
+
+Автор: Аннануров Даниил Петрович, ИВТ 1.2
+Практическая работа #3 по курсу "Математические основы компьютерной графики"
+"""
+
 import os
 import sys
 from time import sleep
@@ -23,11 +41,25 @@ class AlienInvasion:
         self.fps = 60  # Устанавливаем FPS
 
         # Инициализация звуков
-        pygame.mixer.init()
-        self.bullet_sound = pygame.mixer.Sound(resource_path('sounds/laser.wav'))
-        self.alien_hit_sound = pygame.mixer.Sound(resource_path('sounds/explosion.wav'))
-        self.ship_hit_sound = pygame.mixer.Sound(resource_path('sounds/ship_hit.wav'))
-        self.game_over_sound = pygame.mixer.Sound(resource_path('sounds/game_over.wav'))
+        try:
+            pygame.mixer.init()
+            self.bullet_sound = pygame.mixer.Sound(resource_path('sounds/laser.wav'))
+            self.alien_hit_sound = pygame.mixer.Sound(resource_path('sounds/explosion.wav'))
+            self.ship_hit_sound = pygame.mixer.Sound(resource_path('sounds/ship_hit.wav'))
+            self.game_over_sound = pygame.mixer.Sound(resource_path('sounds/game_over.wav'))
+            self.sound_enabled = True
+        except (pygame.error, OSError) as e:
+            # В случае проблем с аудио (например, в headless среде), отключаем звук
+            print(f"Предупреждение: Не удалось инициализировать звук - {e}")
+            self.sound_enabled = False
+            # Создаем заглушки для звуков
+            class DummySound:
+                def play(self): pass
+            
+            self.bullet_sound = DummySound()
+            self.alien_hit_sound = DummySound()
+            self.ship_hit_sound = DummySound()
+            self.game_over_sound = DummySound()
 
         # Создаем окно игры
         self.screen = pygame.display.set_mode((1200, 800))

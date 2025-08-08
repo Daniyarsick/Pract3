@@ -35,11 +35,25 @@ class Settings:
         self.initialize_dynamic_settings()
 
         # Инициализация звуков
-        pygame.mixer.init()
-        self.bullet_sound = pygame.mixer.Sound(resource_path('sounds/laser.wav'))
-        self.alien_hit_sound = pygame.mixer.Sound(resource_path('sounds/explosion.wav'))
-        self.ship_hit_sound = pygame.mixer.Sound(resource_path('sounds/ship_hit.wav'))
-        self.game_over_sound = pygame.mixer.Sound(resource_path('sounds/game_over.wav'))
+        try:
+            pygame.mixer.init()
+            self.bullet_sound = pygame.mixer.Sound(resource_path('sounds/laser.wav'))
+            self.alien_hit_sound = pygame.mixer.Sound(resource_path('sounds/explosion.wav'))
+            self.ship_hit_sound = pygame.mixer.Sound(resource_path('sounds/ship_hit.wav'))
+            self.game_over_sound = pygame.mixer.Sound(resource_path('sounds/game_over.wav'))
+            self.sound_enabled = True
+        except (pygame.error, OSError) as e:
+            # В случае проблем с аудио (например, в headless среде), отключаем звук
+            print(f"Предупреждение: Не удалось инициализировать звук - {e}")
+            self.sound_enabled = False
+            # Создаем заглушки для звуков
+            class DummySound:
+                def play(self): pass
+            
+            self.bullet_sound = DummySound()
+            self.alien_hit_sound = DummySound()
+            self.ship_hit_sound = DummySound()
+            self.game_over_sound = DummySound()
 
     def initialize_dynamic_settings(self):
         """Инициализирует настройки, которые меняются в процессе игры."""
